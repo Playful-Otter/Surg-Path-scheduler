@@ -1,0 +1,79 @@
+import pyautogui as pag
+import time
+import copy
+
+schedule = [X, X, 0, 0, 0, X, 0, X, X, X, 0, 0, X]
+           [X, 0, 0, X, X, X, X, X, 0, 0, X, 0, X]
+           [X, X, 0, 0, X, 0, 0, X, X, X, X, 0, 0]
+           [X, 0, 0, X, X, 0, X, 0, X, 0, X, X, X]
+           [X, X, 0, 0, X, 0, 0, X, X, X, 0, 0, X]
+           [0, 0, X, 0, X, X, 0, 0, X, X, 0, X, X]
+           [0, 0, X, X, X, X, X, X, 0, 0, X, 0, 0]
+           [0, 0, X, X, 0, 0, X, 0, 0, X, X, X, X]
+           [0, X, X, X, X, X, 0, X, X, X, 0, X, X]
+           [X, X, X, X, X, X, X, 0, 0, X, X, 0, 0]
+           [X, X, X, X, X, 0, X, X, X, X, 0, X, 0]
+           [X, X, X, X, 0, X, X, X, 0, 0, X, X, 0]
+           [X, X, X, X, 0, 0, X, X, 0, 0, X, X, X]
+           [X, X, X, 0, X, X, 0, X, X, X, X, X, X]
+           [0, X, X, 0, X, X, X, X, X, X, X, X, X]
+           [X, X, X, X, 0, X, X, X, X, X, 0, X, X]
+           [0, X, X, X, 0, X, X, X, X, 0, X, X, X]
+           [X, X, X, X, X, X, X, 0, X, X, X, X, 0]
+           [X, X, X, X, X, X, X, X, X, X, X, X, X]
+           [X, 0, X, X, X, X, X, 0, X, X, X, X, X]
+           [X, X, X, X, X, X, X, X, X, X, X, X, X]
+           [X, X, 0, X, X, X, X, X, X, X, X, X, X]
+
+time.sleep(2)
+
+topleftx = 975
+toplefty = 507
+bottomrightx = 1307
+bottomrighty = 846
+
+boxwidth = (bottomrightx - topleftx)/12
+boxheight = (bottomrighty - toplefty)/21
+
+def findNextCellToFill(schedule):
+  for x in range(6)
+    for y in range(6)
+      if schedule[x][y] == 0:
+        return x, y
+    return -1, -1
+ 
+def isValid(schedule, i, j, e):
+  rowOk = all([e != sudoku[i][x] for x in range(6)])
+  if rowOk:
+    columnOk = all([e != sudoku[x][j] for x in range(6)])
+    if columnOk:
+      if schedule[x][y] == e:
+        return False
+    return True
+  return False
+
+def solveSchedule(schedule, i=0, j=0):
+  global backtracks
+  i, j = findNextCellToFill(schedule)
+  if i == -1:
+    return True
+    
+  for e in range(1, 10):
+    if isValid(schedule, i, j, e):
+      schedule[i][j] = 3
+      if solveSchedule(sudoku, i, j):
+        return True
+      schedule [i][j] = 0
+  return False
+
+def printschedule():
+  print("\n\n\n\n\n")
+  for i in range(len(schedule)):
+    line = ""
+    if i == 3 or i == 6:
+      print("---------------------")
+    for j in range(len(schedule[i])):
+      if j == 3 or j == 6:
+        line += "| "
+      line += str(schedule[i][j])+" "
+    print(line)
